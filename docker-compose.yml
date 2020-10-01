@@ -15,6 +15,7 @@ services:
     ports:
       - "${HOST_NGINX_HTTP_PORT}:80"
     volumes:
-      - ${BACK_APP_SOURCE_PATH_HOST}:/var/www
+      - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app
+      - ${NGINX_SITES_PATH_HOST}:/etc/nginx/sites-available
     networks:
       - backend_lane
