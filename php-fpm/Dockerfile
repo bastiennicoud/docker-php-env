@@ -1,6 +1,6 @@
 FROM php:7.4-fpm-alpine
 
-ADD ./php/www.conf /usr/local/etc/php-fpm.d/www.conf
+ADD ./www.conf /usr/local/etc/php-fpm.d/www.conf
 
 RUN addgroup -g 1000 www-php-fpm && adduser -G www-php-fpm -g www-php-fpm -s /bin/sh -D www-php-fpm
 
