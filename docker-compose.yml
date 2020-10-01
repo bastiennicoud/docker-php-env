@@ -50,6 +50,6 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - SERVICE_TAGS= dev
       - SERVICE_NAME= mysql
-      - TZ=${WORKSPACE_TIMEZONE}
+      - TZ=${APP_TIMEZONE}
     networks:
       - backend-lane
