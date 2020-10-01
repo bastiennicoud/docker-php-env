@@ -19,4 +19,7 @@ $ docker-compose up -d nginx
 
 # Built the docker images and start the nginx service
 $ docker-compose up -d --build nginx
+
+# Stop and remove the containers, network and volumes
+$ docker-compose down
 ```
