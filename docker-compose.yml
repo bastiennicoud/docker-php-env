@@ -1,11 +1,11 @@
 #
-# Docker compose configuration to run laravel with transversal capabilities
+# Docker compose configuration to run php app (like laravel) with transversal capabilities
 #
 
 version: '3'
 
 networks:
-  backend_lane:
+  backend-lane:
 
 services:
   nginx:
@@ -17,5 +17,18 @@ services:
     volumes:
       - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app
       - ${NGINX_SITES_PATH_HOST}:/etc/nginx/sites-available
+    depends_on:
+      - php-fpm
     networks:
-      - backend_lane
+      - backend-lane
+
+  php-fpm:
+    build:
+      context: ./php-fmp
+    container_name: php-fpm
+    ports:
+      - "9000:9000"
+    volumes:
+      - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app
+    networks:
+      - backend-lane
