@@ -24,7 +24,7 @@ services:
 
   php-fpm:
     build:
-      context: ./php-fmp
+      context: ./php-fpm
     container_name: php-fpm
     ports:
       - "9000:9000"
