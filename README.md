@@ -11,6 +11,12 @@ A set of docker preconfigured images and a compose script to setup a dev environ
 ### Launch the containers
 
 ```
+# Built images
+$ docker-compose build
+
+# Start the nginx service
+$ docker-compose up -d nginx
+
 # Built the docker images and start the nginx service
 $ docker-compose up -d --build nginx
 ```
