@@ -3,3 +3,18 @@
 #
 
 version: '3'
+
+networks:
+  backend_lane:
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+    container_name: nginx
+    ports:
+      - "${HOST_NGINX_HTTP_PORT}:80"
+    volumes:
+      - ${BACK_APP_SOURCE_PATH_HOST}:/var/www
+    networks:
+      - backend_lane
