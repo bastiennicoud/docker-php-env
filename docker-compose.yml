@@ -1,0 +1,5 @@
+#
+# Docker compose configuration to run laravel with transversal capabilities
+#
+
+version: '3'
