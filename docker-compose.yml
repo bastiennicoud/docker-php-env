@@ -8,6 +8,7 @@ networks:
   backend-lane:
 
 services:
+  # Base service, nginx that expose the app
   nginx:
     build:
       context: ./nginx
@@ -22,6 +23,7 @@ services:
     networks:
       - backend-lane
 
+  # Container that runs tht php interpreter
   php-fpm:
     build:
       context: ./php-fpm
@@ -30,5 +32,23 @@ services:
       - "9000:9000"
     volumes:
       - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app
+    networks:
+      - backend-lane
+
+  # MySQL database
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "${HOST_MYSQL_PORT}:3306"
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - SERVICE_TAGS= dev
+      - SERVICE_NAME= mysql
+      - TZ=${WORKSPACE_TIMEZONE}
     networks:
       - backend-lane
