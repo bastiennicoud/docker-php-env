@@ -53,3 +53,5 @@ If you do not whant this behavior, you can remove the volume in the `docker-comp
 - Add service to run meilisearch search engine
 - Add service to run task scheduling service
 - Add service to run queue worker
+- Add caddy 2 webserver with https
+- Add service to run websocket service
