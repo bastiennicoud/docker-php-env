@@ -26,3 +26,12 @@ $ docker-compose down
 # Stop the containers
 $ docker-compose stop
 ```
+
+### .env
+
+The `.env` file contains environment vars, yout can tweek these vars to update your config to your needs.
+
+### MySQL database volume
+
+By default the mysql db will be stored in a docker volume to persist the db between containers starts and stops.
+If you do not whant this behavior, you can remove the volume in the `docker-compose.yml` file.
