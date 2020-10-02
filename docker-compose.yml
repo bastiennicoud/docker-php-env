@@ -11,6 +11,8 @@ networks:
 volumes:
   # Volume for mysql database storage
   mysql-db-data:
+  # Volume for pgsql database storage
+  pgsql-db-data:
   # Composer cache
   composer-cache:
 
@@ -27,7 +29,7 @@ services:
       - ${NGINX_SITES_PATH_HOST}:/etc/nginx/sites-available:delegated
     depends_on:
       - php-fpm
-      - mysql
+      - ${ACTIVE_DATABASE}
     networks:
       - backend-lane
 
@@ -40,26 +42,6 @@ services:
       - "9000:9000"
     volumes:
       - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app:delegated
-    networks:
-      - backend-lane
-
-  # MySQL database
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
-    command: --default-authentication-plugin=mysql_native_password
-    ports:
-      - "${HOST_MYSQL_PORT}:3306"
-    environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - SERVICE_TAGS= dev
-      - SERVICE_NAME= mysql
-      - TZ=${APP_TIMEZONE}
-    volumes:
-      - mysql-db-data:/var/lib/mysql
     networks:
       - backend-lane
 
@@ -85,9 +67,44 @@ services:
     volumes:
       - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app
     depends_on:
-      - mysql
+      - ${ACTIVE_DATABASE}
     working_dir: /var/www/app
     user: www-php-cli
     networks:
       - backend-lane
     entrypoint: ['php', '/var/www/app/artisan']
+
+  # MySQL database
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "${HOST_MYSQL_PORT}:3306"
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - SERVICE_TAGS= dev
+      - SERVICE_NAME= mysql
+      - TZ=${APP_TIMEZONE}
+    volumes:
+      - mysql-db-data:/var/lib/mysql
+    networks:
+      - backend-lane
+
+  # PostgreSQL database
+  pgsql:
+    image: postgres:13-alpine
+    container_name: pgsql
+    ports:
+      - "${HOST_PGSQL_PORT}:5432"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+    volumes:
+      - pgsql-db-data:/var/lib/postgresql/data
+    networks:
+      - backend-lane
