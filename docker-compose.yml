@@ -4,8 +4,13 @@
 
 version: '3'
 
+# Docker network to interconnect services
 networks:
   backend-lane:
+
+volumes:
+  # Volume for mysql database storage
+  mysql-db-data:
 
 services:
   # Base service, nginx that expose the app
@@ -51,5 +56,7 @@ services:
       - SERVICE_TAGS= dev
       - SERVICE_NAME= mysql
       - TZ=${APP_TIMEZONE}
+    volumes:
+      - mysql-db-data:/var/lib/mysql
     networks:
       - backend-lane
