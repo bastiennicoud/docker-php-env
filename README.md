@@ -29,9 +29,14 @@ $ docker-compose stop
 
 ### Run commands into services
 
+These commands runs the service, execute the passed command, then stop the service `-rm` flag.
+
 ```
 # Start and run a composer command into the composer service
 $ docker-compose run --rm composer install mypackage/mypackage
+
+# Run artisan commands inside php-cli service
+$ docker-compose run --rm artisan make:seeder UserSeeder
 ```
 
 ### .env

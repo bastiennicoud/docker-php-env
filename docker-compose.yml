@@ -11,6 +11,7 @@ networks:
 volumes:
   # Volume for mysql database storage
   mysql-db-data:
+  # Composer cache
   composer-cache:
 
 services:
@@ -75,3 +76,18 @@ services:
     networks:
       - backend-lane
     entrypoint: ['composer', '--ignore-platform-reqs']
+
+  # Service to run artisan commands
+  artisan:
+    build:
+      context: ./php-cli
+    container_name: artisan
+    volumes:
+      - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app
+    depends_on:
+      - mysql
+    working_dir: /var/www/app
+    user: www-php-cli
+    networks:
+      - backend-lane
+    entrypoint: ['php', '/var/www/app/artisan']
