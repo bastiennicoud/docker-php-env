@@ -10,4 +10,6 @@ RUN chown www-php-fpm:www-php-fpm /var/www/app
 
 WORKDIR /var/www/app
 
-RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-install pdo pdo_mysql opcache
+
+ADD ./opcache.ini $PHP_INI_DIR/conf.d/opcache.ini
