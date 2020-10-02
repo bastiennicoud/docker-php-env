@@ -18,4 +18,10 @@ RUN set -ex \
 
 RUN docker-php-ext-install pdo_pgsql
 
+# Install redis driver via pecl (need to install build dependencies before requiering phpredis)
+RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS
+RUN pecl install redis-5.3.1
+RUN docker-php-ext-enable redis
+RUN apk del -f .build-deps
+
 ADD ./opcache.ini $PHP_INI_DIR/conf.d/opcache.ini

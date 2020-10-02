@@ -13,6 +13,8 @@ volumes:
   mysql-db-data:
   # Volume for pgsql database storage
   pgsql-db-data:
+  # Redis persistence storage
+  redis-db-data:
   # Composer cache
   composer-cache:
 
@@ -29,7 +31,6 @@ services:
       - ${NGINX_SITES_PATH_HOST}:/etc/nginx/sites-available:delegated
     depends_on:
       - php-fpm
-      - ${ACTIVE_DATABASE}
     networks:
       - backend-lane
 
@@ -42,6 +43,9 @@ services:
       - "9000:9000"
     volumes:
       - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app:delegated
+    depends_on:
+      - ${ACTIVE_DATABASE}
+      - redis
     networks:
       - backend-lane
 
@@ -106,5 +110,16 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
     volumes:
       - pgsql-db-data:/var/lib/postgresql/data
+    networks:
+      - backend-lane
+
+  # Redis database
+  redis:
+    image: redis:6.0-alpine
+    command: redis-server
+    volumes:
+      - redis-db-data:/data
+    ports:
+      - ${HOST_REDIS_PORT}:6379
     networks:
       - backend-lane
