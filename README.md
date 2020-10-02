@@ -35,8 +35,12 @@ These commands runs the service, execute the passed command, then stop the servi
 # Start and run a composer command into the composer service
 $ docker-compose run --rm composer install mypackage/mypackage
 
-# Run artisan commands inside php-cli service
-$ docker-compose run --rm artisan make:seeder UserSeeder
+# Run php-cli commands inside php-cli service
+$ docker-compose run --rm php-cli make:seeder UserSeeder
+
+# Run the queues worker in his separate service
+$ docker-compose run queues-worker queue:work # With laravel default queues driver
+$ docker-compose run queues-worker horizon # With laravel horizon
 ```
 
 ### .env
@@ -54,4 +58,5 @@ If you do not whant this behavior, you can remove the volume in the `docker-comp
 - Add service to run task scheduling service
 - Add service to run queue worker
 - Add caddy 2 webserver with https
+- Add mailhog for mail testing
 - Add service to run websocket service

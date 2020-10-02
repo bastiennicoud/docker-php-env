@@ -63,11 +63,11 @@ services:
       - backend-lane
     entrypoint: ['composer', '--ignore-platform-reqs']
 
-  # Service to run artisan commands
-  artisan:
+  # Service to run php-cli commands
+  php-cli:
     build:
       context: ./php-cli
-    container_name: artisan
+    container_name: php-cli
     volumes:
       - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app
     depends_on:
@@ -76,7 +76,7 @@ services:
     user: www-php-cli
     networks:
       - backend-lane
-    entrypoint: ['php', '/var/www/app/artisan']
+    entrypoint: ['php', '/var/www/app/${FRAMEWORK_CLI}']
 
   # MySQL database
   mysql:
@@ -123,3 +123,19 @@ services:
       - ${HOST_REDIS_PORT}:6379
     networks:
       - backend-lane
+
+  # Queues worker
+  queues-worker:
+    build:
+      context: ./php-cli
+    container_name: queues-worker
+    volumes:
+      - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app
+    depends_on:
+      - ${ACTIVE_DATABASE}
+      - redis
+    working_dir: /var/www/app
+    user: www-php-cli
+    networks:
+      - backend-lane
+    entrypoint: ['php', '/var/www/app/${FRAMEWORK_CLI}']
