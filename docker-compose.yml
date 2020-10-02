@@ -16,8 +16,8 @@ services:
     ports:
       - "${HOST_NGINX_HTTP_PORT}:80"
     volumes:
-      - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app
-      - ${NGINX_SITES_PATH_HOST}:/etc/nginx/sites-available
+      - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app:delegated
+      - ${NGINX_SITES_PATH_HOST}:/etc/nginx/sites-available:delegated
     depends_on:
       - php-fpm
       - mysql
@@ -32,7 +32,7 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app
+      - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app:delegated
     networks:
       - backend-lane
 
