@@ -8,7 +8,7 @@ A set of docker preconfigured images and a compose script to setup a dev environ
 2. Put your app source code in the src folder.
 3. Start the environment with docker compose.
 
-### Launch the containers
+### Launch the service
 
 ```
 # Built images
@@ -25,6 +25,13 @@ $ docker-compose down
 
 # Stop the containers
 $ docker-compose stop
+```
+
+### Run commands into services
+
+```
+# Start and run a composer command into the composer service
+$ docker-compose run --rm composer install mypackage/mypackage
 ```
 
 ### .env

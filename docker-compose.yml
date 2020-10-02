@@ -13,7 +13,7 @@ volumes:
   mysql-db-data:
 
 services:
-  # Base service, nginx that expose the app
+  # Base service, nginx webserver that expose the app
   nginx:
     build:
       context: ./nginx
@@ -29,7 +29,7 @@ services:
     networks:
       - backend-lane
 
-  # Container that runs tht php interpreter
+  # Container that runs tht php interpreter with fastcgi
   php-fpm:
     build:
       context: ./php-fpm
@@ -60,3 +60,16 @@ services:
       - mysql-db-data:/var/lib/mysql
     networks:
       - backend-lane
+
+  # Service to run composer in a dedicated container
+  composer:
+    build:
+      context: ./composer
+    container_name: composer
+    volumes:
+      - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app
+    working_dir: /var/www/app
+    user: composer-www-data
+    networks:
+      - backend-lane
+    entrypoint: ['composer', '--ignore-platform-reqs']
