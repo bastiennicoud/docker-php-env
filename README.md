@@ -34,7 +34,7 @@ These commands runs the service, execute the passed command, then stop the servi
 
 ```
 # Start and run a composer command into the composer service
-$ docker-compose run --rm composer install mypackage/mypackage
+$ docker-compose run --rm composer require mypackage/mypackage
 
 # Run php-cli commands inside php-cli service
 $ docker-compose run --rm php-cli make:seeder UserSeeder
@@ -48,6 +48,9 @@ docker-compose up -d mailhog
 
 # Run meilisearch
 docker-compose up -d meilisearch
+
+# Run node scripts
+docker-compose run --rm node npm install
 ```
 
 ### .env
