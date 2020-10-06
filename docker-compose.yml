@@ -128,7 +128,6 @@ services:
       - backend-lane
 
   # Queues worker
-  # TODO - test this service
   queues-worker:
     build:
       context: ./php-cli
@@ -146,7 +145,7 @@ services:
 
   # Meilisearch service
   meilisearch:
-    image: getmeili/meilisearch:v0.14.1
+    image: getmeili:meilisearch:v0.14.1
     container_name: meilisearch
     ports:
       - ${HOST_MEILISEARCH_PORT}:7700
@@ -155,7 +154,7 @@ services:
 
   # Mail hog
   mailhog:
-    image: mailhog/mailhog:v1.0.1
+    image: mailhog:mailhog:v1.0.1
     container_name: mailhog
     ports:
       - ${HOST_MAILHOG_SMTP_PORT}:1025
@@ -165,7 +164,7 @@ services:
 
   # Caddy 2 server, an alternative to NGINX
   caddy:
-    image: caddy/2.2.0-alpine
+    image: caddy:2.2.0-alpine
     container_name: caddy
     ports:
       - "${HOST_CADDY_HTTP_PORT}:80"

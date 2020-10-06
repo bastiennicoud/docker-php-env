@@ -19,6 +19,7 @@ $ docker-compose up -d nginx
 
 # Built the docker images and start the nginx service
 $ docker-compose up -d --build nginx
+$ docker-compose up -d --build caddy # if you wand to use caddy 2 webserver
 
 # Stop and remove the containers, network and volumes
 $ docker-compose down
@@ -39,8 +40,11 @@ $ docker-compose run --rm composer install mypackage/mypackage
 $ docker-compose run --rm php-cli make:seeder UserSeeder
 
 # Run the queues worker in his separate service
-$ docker-compose run queues-worker queue:work # With laravel default queues driver
-$ docker-compose run queues-worker horizon # With laravel horizon
+$ docker-compose up -d queues-worker queue:work # With laravel default queues driver
+$ docker-compose up -d queues-worker horizon # With laravel horizon
+
+# Run mailhog
+docker-compose up -d mailhog
 ```
 
 ### .env
