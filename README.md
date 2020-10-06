@@ -54,9 +54,9 @@ If you do not whant this behavior, you can remove the volume in the `docker-comp
 
 ## TODO
 
-- Add service to run meilisearch search engine
+- **Add service to run meilisearch search engine
 - Add service to run task scheduling service
-- Add service to run queue worker
+- **Add service to run queue worker
 - Add caddy 2 webserver with https
-- Add mailhog for mail testing
+- **Add mailhog for mail testing
 - Add service to run websocket service

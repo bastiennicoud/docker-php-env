@@ -17,6 +17,9 @@ volumes:
   redis-db-data:
   # Composer cache
   composer-cache:
+  # Caddy config cache
+  caddy-data:
+  caddy-config:
 
 services:
   # Base service, nginx webserver that expose the app
@@ -125,6 +128,7 @@ services:
       - backend-lane
 
   # Queues worker
+  # TODO - test this service
   queues-worker:
     build:
       context: ./php-cli
@@ -139,3 +143,39 @@ services:
     networks:
       - backend-lane
     entrypoint: ['php', '/var/www/app/${FRAMEWORK_CLI}']
+
+  # Meilisearch service
+  meilisearch:
+    image: getmeili/meilisearch:v0.14.1
+    container_name: meilisearch
+    ports:
+      - ${HOST_MEILISEARCH_PORT}:7700
+    networks:
+      - backend-lane
+
+  # Mail hog
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    container_name: mailhog
+    ports:
+      - ${HOST_MAILHOG_SMTP_PORT}:1025
+      - ${HOST_MAILHOG_PORT}:8025
+    networks:
+      - backend-lane
+
+  # Caddy 2 server, an alternative to NGINX
+  caddy:
+    image: caddy/2.2.0-alpine
+    container_name: caddy
+    ports:
+      - "${HOST_CADDY_HTTP_PORT}:80"
+      - "${HOST_CADDY_HTTPS_PORT}:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ${BACK_APP_SOURCE_PATH_HOST}:/var/www/app
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - php-fpm
+    networks:
+      - backend-lane
