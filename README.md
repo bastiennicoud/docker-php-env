@@ -45,6 +45,9 @@ $ docker-compose up -d queues-worker horizon # With laravel horizon
 
 # Run mailhog
 docker-compose up -d mailhog
+
+# Run meilisearch
+docker-compose up -d meilisearch
 ```
 
 ### .env
@@ -58,9 +61,5 @@ If you do not whant this behavior, you can remove the volume in the `docker-comp
 
 ## TODO
 
-- **Add service to run meilisearch search engine
 - Add service to run task scheduling service
-- **Add service to run queue worker
-- Add caddy 2 webserver with https
-- **Add mailhog for mail testing
 - Add service to run websocket service
