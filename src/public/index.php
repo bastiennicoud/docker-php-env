@@ -1,7 +1,9 @@
+<h1>
+Hello from docker-php-env
+</h1>
+
 <?php
 
-echo "Hello from PHP !"
-
-echo "docker environment is running..."
+echo "docker environment is running...";
 
 phpinfo();
