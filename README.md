@@ -1,6 +1,6 @@
 # DOCKER-PHP-ENV
 
-A set of docker preconfigured images and a compose script to setup a dev environment quickly for PHP development with frameworks like [Laravel](https://laravel.com/docs).
+A set of docker preconfigured images and a compose script to quickly setup a dev environment for PHP development with frameworks like [Laravel](https://laravel.com/docs) or [Symfony](https://symfony.com).
 
 ## How to use it
 
